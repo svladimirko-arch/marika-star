@@ -1,0 +1,8 @@
+node_modules/
+dist/
+preview/
+.image-cache/
+inform/
+.env
+*.log
+srv.pid

@@ -1,0 +1,74 @@
+/* ===== Первый экран ===== */
+/* Десктоп: hero прилипает к верху на высоту «дорожки», пока фото перелистывается при скролле */
+@media (min-width: 1080px) and (prefers-reduced-motion: no-preference) {
+  .hero-track { height: 260svh; }
+  .hero-track .hero { position: sticky; top: 0; height: 100svh; }
+}
+.hero { position: relative; min-height: 100svh; padding-top: calc(var(--header-h) + 1.5rem); padding-bottom: 4.5rem; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.hero__grid { display: grid; gap: 2.5rem; align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 1080px) { .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(2rem, 4vw, 5rem); } }
+
+.hero__brand { margin-bottom: 1.75rem; }
+.hero__brand span { color: var(--taupe); margin-inline: .35em; }
+.hero__title { font-size: clamp(2.75rem, 1.5rem + 5.6vw, 4.5rem); line-height: .98; letter-spacing: -.02em; }
+/* На десктопе заголовок — ровно две строки, как в ТЗ; размер подогнан под ширину колонки */
+@media (min-width: 1080px) {
+  .hero__title { font-size: clamp(3rem, 4.6vw, 4.15rem); }
+  .hero__title .line__in { white-space: nowrap; }
+}
+.hero__title em { color: var(--burgundy); }
+.hero__lead { margin-top: 1.75rem; font-size: var(--fs-lead); color: var(--text-2); max-width: 30em; }
+.hero__cta { margin-top: 2.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem; }
+.hero__note { margin-top: 1.5rem; font-size: var(--fs-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--text-2); }
+
+/* Кадр 4:5 — слои фото и чертежа делят одну систему координат */
+.hero__visual { position: relative; display: flex; justify-content: center; }
+.hero__frame { position: relative; width: 100%; max-width: 560px; aspect-ratio: 4 / 5; }
+@media (min-width: 1080px) {
+  .hero__frame { width: auto; max-width: 100%; height: min(calc(100svh - var(--header-h) - 6.5rem), 820px); }
+}
+.hero__photo { position: absolute; inset: 0; overflow: hidden; background: var(--beige); perspective: 1600px; }
+/* Два кадра одного размера: манекен (front) и модель (back). Скролл крутит их вокруг вертикальной оси. */
+.hero__face { position: absolute; inset: 0; backface-visibility: hidden; }
+.hero__face--front { transform: rotateY(var(--rf, 0deg)); }
+.hero__face--back { transform: rotateY(var(--rb, 92deg)); }
+.hero__img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Технические подписи (HTML, чтобы текст не масштабировался с кадром и оставался читаемым) */
+.hero__strip { position: absolute; top: 50%; right: -1.6rem; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .3em; text-transform: uppercase; color: var(--taupe); white-space: nowrap; }
+@media (max-width: 1079.98px) { .hero__strip { display: none; } }
+
+/* Строчка внизу экрана */
+.hero__stitch { position: absolute; left: 0; right: 0; bottom: 2.25rem; width: calc(100% - 2 * var(--gutter)); margin-inline: auto; height: 12px; overflow: visible; }
+.hero > .container:last-child { position: static; }
+.stitch-base { stroke: var(--taupe); stroke-width: 1.2; stroke-dasharray: 1 6; stroke-linecap: round; opacity: .55; vector-effect: non-scaling-stroke; }
+.stitch-real { stroke: var(--burgundy); stroke-width: 2; stroke-dasharray: 12 8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+/* ===== Анимация появления (включается классом html.js и html.is-ready) ===== */
+.js .hero__photo { clip-path: inset(0 0 100% 0); }
+.js .hero__img { transform: scale(1.18); }
+.js .line { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
+.js .line__in { display: block; transform: translateY(108%); }
+.js .reveal { opacity: 0; transform: translateY(14px); }
+.js .hero__strip { opacity: 0; }
+.js .stitch-clip { clip-path: inset(0 100% 0 0); }
+
+.is-ready .hero__photo { animation: photo-in 1.5s var(--ease-out) .15s forwards; }
+.is-ready .hero__img { animation: img-settle 2.2s var(--ease-out) .15s forwards; }
+.is-ready .line__in { animation: line-up 1.1s var(--ease-out) calc(.35s + var(--i) * .16s) forwards; }
+.is-ready .reveal { animation: fade-up .9s var(--ease-out) calc(.35s + var(--i) * .16s) forwards; }
+.is-ready .reveal--last { animation-delay: 1.9s; }
+.is-ready .hero__strip { animation: fade-in .9s var(--ease) 2.5s forwards; }
+.is-ready .stitch-clip { animation: stitch-run 2.6s var(--ease) 1.4s forwards; }
+
+@keyframes photo-in { to { clip-path: inset(0 0 0 0); } }
+@keyframes img-settle { to { transform: scale(1); } }
+@keyframes line-up { to { transform: none; } }
+@keyframes fade-up { to { opacity: 1; transform: none; } }
+@keyframes fade-in { to { opacity: 1; } }
+@keyframes stitch-run { to { clip-path: inset(0 0 0 0); } }
+
+/* Мобильные: короче и легче */
+@media (max-width: 1079.98px) {
+  .hero { min-height: auto; padding-bottom: 5rem; }
+}

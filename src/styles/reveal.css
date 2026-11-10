@@ -1,0 +1,24 @@
+/* Появление при прокрутке. Работает только при html.js; без JS всё видно сразу. */
+picture { display: block; width: 100%; height: 100%; }
+
+/* Плавное проявление фото по мере загрузки: без рывка, даже если блок уже открылся */
+.js img { opacity: 0; transition: opacity .7s var(--ease-out); }
+.js img.is-loaded { opacity: 1; }
+
+.js [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); transition-delay: calc(var(--rd, 0) * 1ms); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Маски: наблюдается обёртка, а clip-path лежит на дочернем элементе
+   (иначе обнулённая видимая область не даёт IntersectionObserver сработать). */
+.js [data-reveal="mask"], .js [data-reveal="mask-x"] { opacity: 1; transform: none; }
+.js [data-reveal="mask"] > * { clip-path: inset(0 0 100% 0); transition: clip-path 1.3s var(--ease-out); transition-delay: calc(var(--rd, 0) * 1ms); }
+.js [data-reveal="mask-x"] > * { clip-path: inset(0 100% 0 0); transition: clip-path 1.3s var(--ease-out); transition-delay: calc(var(--rd, 0) * 1ms); }
+.js [data-reveal="mask"].is-in > *, .js [data-reveal="mask-x"].is-in > * { clip-path: inset(0); }
+.js [data-reveal="mask"] img, .js [data-reveal="mask-x"] img { transform: scale(1.14); transition: transform 1.9s var(--ease-out); transition-delay: calc(var(--rd, 0) * 1ms); }
+.js [data-reveal="mask"].is-in img, .js [data-reveal="mask-x"].is-in img { transform: scale(1); }
+
+/* Заголовки: построчный подъём */
+.js [data-reveal="lines"] { opacity: 1; transform: none; }
+.js [data-reveal="lines"] .line { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
+.js [data-reveal="lines"] .line__in { display: block; transform: translateY(108%); transition: transform 1.1s var(--ease-out); transition-delay: calc(var(--i, 0) * 140ms + var(--rd, 0) * 1ms); }
+.js [data-reveal="lines"].is-in .line__in { transform: none; }

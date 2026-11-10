@@ -1,0 +1,20 @@
+/* ===== Блок «С чего начнём?» ===== */
+.choose__head { margin-bottom: clamp(2.5rem, 5vw, 5rem); }
+.choose__head h2 { margin-top: 1rem; }
+.choose__head h2 em { color: var(--beige); }
+.choose__grid { display: grid; gap: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 3.5rem); grid-template-columns: 1fr; }
+@media (min-width: 900px) {
+  .choose__grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  .path--business { margin-top: clamp(3rem, 8vw, 8rem); }   /* журнальный сдвиг второй карточки */
+}
+.path__media { aspect-ratio: 4 / 5; overflow: hidden; background: #34332F; position: relative; }
+.path__media::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(244,240,232,.12); pointer-events: none; }
+.path__img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+.path:hover .path__img { transform: scale(1.035); }
+.js .path[data-hover] .path__img { transform: scale(1.035); }
+
+.path__body { display: grid; grid-template-columns: auto 1fr; column-gap: 1.5rem; row-gap: .9rem; padding-top: 1.75rem; align-items: start; }
+.path__num { grid-row: 1 / 4; font: 400 clamp(3.5rem, 2.5rem + 4vw, 6rem)/.8 var(--font-serif); color: transparent; -webkit-text-stroke: 1px var(--beige); }
+.path__title { font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem); }
+.path__text { color: #CFC8BB; max-width: 28em; }
+.path__actions { margin-top: .6rem; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }

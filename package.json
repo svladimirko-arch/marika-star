@@ -1,0 +1,19 @@
+{
+  "name": "marika-star-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Сайт ателье MARIKA STAR (Тюмень): статическая сборка + сервер заявок",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node server/server.mjs",
+    "dev": "node server/server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "sharp": "^0.35.5"
+  }
+}

@@ -1,0 +1,93 @@
+/* ===== Мастер ===== */
+.master__grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); grid-template-columns: 1fr; align-items: center; }
+@media (min-width: 900px) { .master__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); } }
+.master__copy { display: grid; gap: 1.5rem; justify-items: start; }
+.master__copy h2 em { color: var(--burgundy); }
+.master__copy > p:not(.lead):not(.eyebrow) { color: var(--text-2); max-width: 34em; }
+.master__facts { width: 100%; margin-top: .5rem; border-top: 1px solid var(--line); }
+.master__facts li { display: flex; align-items: baseline; gap: 1.5rem; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
+.master__n { font: 500 2rem/1 var(--font-serif); color: var(--burgundy); min-width: 3.2rem; }
+.master__materials { display: grid; gap: .9rem; margin-top: .5rem; }
+.master__materials ul { display: flex; flex-wrap: wrap; gap: .5rem; }
+.master__materials li { border: 1px solid var(--line); border-radius: 999px; padding: .45em 1em; font: 500 var(--fs-xs)/1 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); }
+.master__media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--sand); }
+.master__media picture, .master__media img { width: 100%; height: 100%; object-fit: cover; }
+.master__cap { position: absolute; left: 1rem; top: 1rem; font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .2em; text-transform: uppercase; color: var(--milk); text-shadow: 0 1px 8px rgba(0,0,0,.45); }
+
+/* ===== Стоимость ===== */
+.prices__head { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); display: grid; gap: 1rem; }
+.prices__head h2 em { color: var(--burgundy); }
+.prices__cards { display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); grid-template-columns: 1fr; }
+@media (min-width: 900px) { .prices__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.price-card { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.5rem, 2.5vw, 2.25rem); display: grid; gap: 1.25rem; align-content: start; }
+.price-card h3 { font-size: clamp(1.5rem, 1.25rem + .9vw, 2rem); }
+.price-card__list { display: grid; }
+.price-card__list li { display: flex; align-items: baseline; gap: .6rem; padding-block: .7rem; border-bottom: 1px dashed var(--line); }
+.price-card__list li:last-child { border-bottom: 0; }
+.price-card__dots { flex: 1; border-bottom: 1px dotted var(--text-2); opacity: .5; transform: translateY(-.3em); }
+.price-card__list strong { white-space: nowrap; font-weight: 600; }
+.price-card__list small { font-weight: 400; color: var(--text-2); }
+.price-card__list--terms li { display: block; border-bottom-style: solid; color: var(--text-2); }
+.price-card--terms { background: var(--graphite); color: var(--ivory); border-color: var(--graphite); }
+.price-card--terms .price-card__list--terms li { color: #CFC8BB; border-color: rgba(216,200,178,.22); }
+.price-card--terms .btn { justify-self: start; margin-top: .25rem; }
+
+.prices__catalog { margin-top: clamp(2.5rem, 5vw, 4.5rem); }
+.prices__subtitle { font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); margin-bottom: 1.75rem; }
+.prices__groups { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 4rem); grid-template-columns: 1fr; }
+@media (min-width: 700px) { .prices__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .prices__groups { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.prices__group h4 { font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin: 0 0 .5rem; }
+.prices__group ul { border-top: 1px solid var(--line); }
+.prices__group li { display: flex; align-items: baseline; gap: .6rem; padding-block: .65rem; border-bottom: 1px solid var(--line); }
+.prices__group strong { white-space: nowrap; font-weight: 600; }
+.prices__note { margin-top: 1.75rem; color: var(--text-2); font-size: var(--fs-sm); max-width: 46em; }
+
+/* ===== Вопросы ===== */
+.faq__head { margin-bottom: clamp(2rem, 4vw, 3.5rem); display: grid; gap: 1rem; }
+.faq__head h2 em { color: var(--burgundy); }
+.faq__list { border-top: 1px solid var(--line); }
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item summary { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.4rem; cursor: pointer; list-style: none; font: 500 clamp(1.15rem, 1rem + .7vw, 1.6rem)/1.25 var(--font-serif); }
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__plus { position: relative; flex: 0 0 34px; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; transition: transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
+.faq__plus::before, .faq__plus::after { content: ''; position: absolute; inset: 0; margin: auto; background: currentColor; }
+.faq__plus::before { width: 12px; height: 1.4px; }
+.faq__plus::after { width: 1.4px; height: 12px; transition: transform var(--t-fast) var(--ease); }
+.faq__item[open] .faq__plus { background: var(--burgundy); border-color: var(--burgundy); color: var(--ivory); }
+.faq__item[open] .faq__plus::after { transform: scaleY(0); }
+.faq__a { padding: 0 0 1.5rem; max-width: 44em; color: var(--text-2); }
+
+/* ===== Контакты и форма ===== */
+.anchor { position: relative; top: calc(-1 * var(--header-h) - 24px); display: block; }
+.contacts__grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1000px) { .contacts__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.contacts__info { display: grid; gap: 1.5rem; justify-items: start; }
+.contacts__info h2 em { color: var(--beige); }
+.contacts__list { display: grid; gap: 1.1rem; margin-top: .5rem; }
+.contacts__list li { display: grid; gap: .3rem; }
+.contacts__label { font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .2em; text-transform: uppercase; color: var(--beige); }
+.contacts__phone { font: 500 clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem)/1.1 var(--font-serif); text-decoration: none; }
+.contacts__phone:hover { color: var(--beige); }
+.contacts__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .5rem; }
+
+.lead-form { background: var(--milk); color: var(--graphite); border-radius: 24px; padding: clamp(1.5rem, 3vw, 2.5rem); display: grid; gap: 1.1rem; }
+.lead-form__title { font-size: clamp(1.6rem, 1.3rem + 1.1vw, 2.2rem); }
+.lead-form__seg { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; background: var(--sand); border-radius: 999px; padding: .3rem; }
+.lead-form__seg label { position: relative; }
+.lead-form__seg input { position: absolute; opacity: 0; pointer-events: none; }
+.lead-form__seg span { display: flex; justify-content: center; padding: .7em 1em; border-radius: 999px; font: 600 var(--fs-sm)/1 var(--font-sans); cursor: pointer; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+.lead-form__seg input:checked + span { background: var(--graphite); color: var(--ivory); }
+.lead-form__seg input:focus-visible + span { outline: 2px solid var(--burgundy); outline-offset: 2px; }
+.lead-form__field { display: grid; gap: .4rem; }
+.lead-form__field > span { font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .14em; text-transform: uppercase; color: var(--text-2); }
+.lead-form__field em { color: var(--burgundy); font-style: normal; }
+.lead-form__field input, .lead-form__field textarea { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: .85em 1em; font: 400 var(--fs-base)/1.4 var(--font-sans); width: 100%; resize: vertical; }
+.lead-form__field input:focus, .lead-form__field textarea:focus { outline: 2px solid var(--burgundy); outline-offset: 1px; border-color: var(--burgundy); }
+.lead-form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lead-form__submit { width: 100%; }
+.lead-form__agree { font-size: var(--fs-xs); color: var(--text-2); }
+.lead-form__status { min-height: 1.4em; font-weight: 600; font-size: var(--fs-sm); }
+.lead-form__status.is-ok { color: #2F6B3A; }
+.lead-form__status.is-error { color: var(--burgundy); }
+.lead-form__submit:disabled { opacity: .6; cursor: wait; }

@@ -1,0 +1,123 @@
+/* ===== Фирменные анимации: машинка, ткань, процесс, чертёж → изделие, строчка-рельс ===== */
+
+/* ---- Сравнение эпох: винтажная машинка / современный цех (шов-разделитель) ---- */
+.compare { --x: 50; position: relative; margin-block: clamp(2rem, 4vw, 3.5rem); aspect-ratio: 3 / 2; overflow: hidden; border-block: 1px solid var(--line); background: var(--bg-alt); touch-action: pan-y; user-select: none; }
+.compare__layer { position: absolute; inset: 0; }
+.compare__layer picture, .compare__layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.compare__layer--top { clip-path: inset(0 0 0 calc(var(--x) * 1%)); }
+/* разделитель — вертикальный «шов» */
+.compare__seam { position: absolute; top: 0; bottom: 0; left: calc(var(--x) * 1%); z-index: 2; cursor: ew-resize; }
+.compare__seam::before { content: ''; position: absolute; top: 0; bottom: 0; left: -1.5px; border-left: 3px dotted rgba(244, 240, 232, .95); filter: drop-shadow(0 0 3px rgba(20, 19, 17, .65)); }
+.compare__handle { position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); display: grid; place-items: center; width: 54px; height: 52px; border-radius: 999px; background: var(--ivory); color: var(--burgundy); border: 1px solid var(--line); box-shadow: 0 8px 22px rgba(20, 19, 17, .3); }
+.compare__seam:focus-visible { outline: none; }
+.compare__seam:focus-visible .compare__handle { outline: 2px solid var(--burgundy); outline-offset: 3px; }
+@media (max-width: 720px) { .compare { aspect-ratio: 4 / 3; } .compare__handle { width: 46px; height: 44px; } }
+
+/* ---- Анимация 4: ткань ---- */
+.fabric { position: relative; min-height: clamp(18rem, 30vw, 26rem); overflow: hidden; display: flex; align-items: flex-start; padding-top: clamp(2.5rem, 5vw, 4.5rem); --amp: 1; }
+.fabric__waves { position: absolute; inset: auto 0 0 0; width: 100%; height: 78%; }
+.fw { transform: scaleY(var(--amp)); transform-origin: 0 300px; transition: transform .25s linear; }
+.fw__p { animation: fw-drift 34s linear infinite; }
+.fw--2 .fw__p { animation-duration: 46s; animation-direction: reverse; }
+.fw--3 .fw__p { animation-duration: 58s; }
+.fabric:not(.is-live) .fw__p, .fabric:not(.is-live) .fabric__sheen { animation-play-state: paused; }
+@keyframes fw-drift { to { transform: translateX(-1440px); } }
+.fabric__sheen { position: absolute; inset: 0 auto 0 -40%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .13), transparent); transform: skewX(-14deg); animation: fw-sheen 11s linear infinite; pointer-events: none; }
+@keyframes fw-sheen { to { transform: translateX(350%) skewX(-14deg); } }
+.fabric__inner { position: relative; z-index: 1; display: grid; gap: 1rem; }
+.fabric__line { font-size: clamp(2.25rem, 1.2rem + 4.6vw, 5.5rem); max-width: 14em; }
+.fabric__line em { color: var(--beige); }
+
+/* ---- Процесс ---- */
+.proc__head h2 { margin-top: 1rem; }
+.proc__head h2 em { color: var(--burgundy); }
+.proc__tabs { display: inline-flex; gap: .35rem; padding: .35rem; border: 1px solid var(--line); border-radius: 999px; background: var(--bg-alt); margin-bottom: clamp(2rem, 4vw, 3rem); }
+.proc__tabs[hidden] { display: none; }
+.proc__tab { min-height: 46px; padding: .7em 1.6em; border: 0; border-radius: 999px; background: transparent; font: 600 var(--fs-sm)/1 var(--font-sans); letter-spacing: .04em; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+.proc__tab[aria-selected="true"] { background: var(--graphite); color: var(--ivory); }
+.proc__panel[hidden] { display: none; }
+.proc__panels { display: grid; }
+.proc__panel { display: grid; gap: 2.5rem; justify-items: start; animation: panel-in .6s var(--ease-out); }
+.js .proc__panel + .proc__panel { margin-top: 0; }
+.proc__panel + .proc__panel { margin-top: clamp(3.5rem, 7vw, 6rem); }
+.js .proc__panel[hidden] + .proc__panel, .js .proc__panel + .proc__panel[hidden] { margin-top: 0; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(12px); } }
+
+.steps { position: relative; display: grid; gap: 0; width: 100%; grid-template-columns: 1fr; }
+.step { position: relative; display: grid; grid-template-columns: auto 1fr; column-gap: 1.25rem; align-items: center; padding: 1.4rem 0 1.4rem 0; border-bottom: 1px solid var(--line); }
+.step__icon { color: var(--burgundy); grid-row: 1 / 3; display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid var(--line); border-radius: 50%; background: var(--bg-alt); }
+.step__n { font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .22em; color: var(--taupe); align-self: end; }
+.step__t { font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); align-self: start; margin-top: .35rem; }
+@media (min-width: 960px) {
+  .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: clamp(1rem, 2vw, 2rem); }
+  .step { grid-template-columns: 1fr; row-gap: .9rem; justify-items: start; border-bottom: 0; padding: 0; align-items: start; }
+  .step__icon { grid-row: auto; position: relative; z-index: 1; }
+  .step__n { order: 2; align-self: auto; }
+  .step__t { order: 3; margin-top: 0; }
+  /* пунктир между узлами превращается в строчку при появлении блока */
+  .steps::before, .steps::after { content: ''; position: absolute; left: 32px; right: 32px; top: 32px; border-top: 1.5px dashed var(--line); }
+  .steps::after { border-top-color: var(--burgundy); border-top-style: dashed; clip-path: inset(0 100% 0 0); transition: clip-path 2s var(--ease) .3s; }
+  .js .steps.is-in::after { clip-path: inset(0); }
+  .steps:not([data-reveal])::after { clip-path: inset(0); }
+}
+.js .steps[data-reveal] .step { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); transition-delay: calc(var(--i) * .15s + .2s); }
+.js .steps[data-reveal].is-in .step { opacity: 1; transform: none; }
+
+/* ---- Анимации 2 и 3: чертёж → изделие (сцена на прогрессе прокрутки) ---- */
+.scrub { position: relative; }
+.scrub__sticky { padding-block: clamp(5rem, 8vw, 7rem) 3rem; }
+.scrub__grid { display: grid; gap: 2rem; grid-template-columns: 1fr; align-items: center; }
+.scrub__copy { display: grid; gap: 1.25rem; justify-items: start; }
+.scrub__copy h2 { font-size: clamp(2.25rem, 1.4rem + 3.6vw, 5rem); }
+.scrub__copy h2 em { color: var(--beige); }
+.scrub__steps { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: .5rem; }
+.scrub__steps li { display: flex; gap: .6rem; align-items: baseline; font: 500 var(--fs-sm)/1.2 var(--font-sans); letter-spacing: .06em; color: #8C867A; transition: color .4s var(--ease); }
+.scrub__steps li span { font-weight: 700; font-size: var(--fs-xs); letter-spacing: .2em; }
+.scrub__steps li.is-active { color: var(--ivory); }
+.scrub__steps li.is-active span { color: var(--beige); }
+
+.scrub__frame { --s1: 1; --s2: 1; --s3: 1; --s4: 1; position: relative; justify-self: center; width: 100%; max-width: 560px; aspect-ratio: 4 / 5; background: #1D1D1B; overflow: hidden; }
+.scrub__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sc-grid { opacity: calc(.14 * (1 - var(--s4))); }
+.sc-piece { transform: translate(calc(var(--dx) * 1px * (1 - var(--s3))), calc(var(--dy) * 1px * (1 - var(--s3)))); }
+.sc-out { fill: #34332F; fill-opacity: var(--s3); stroke: var(--beige); stroke-width: 1.6; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: calc(1 - clamp(0, var(--s1) * 1.5 - var(--k), 1)); }
+.sc-aux { opacity: calc(var(--s2) * (1 - var(--s3))); }
+.sc-fold { stroke: #C27A85; stroke-width: 1.4; stroke-dasharray: 10 7; vector-effect: non-scaling-stroke; }
+.sc-grain, .sc-dim { stroke: var(--beige); stroke-width: 1.3; vector-effect: non-scaling-stroke; }
+.sc-mark { fill: none; stroke: #C27A85; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.scrub__svg { opacity: calc(1 - var(--s4) * .96); }
+.sc-label { position: absolute; font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--beige); white-space: nowrap; opacity: calc(var(--s2) * (1 - var(--s3))); pointer-events: none; }
+.sc-label--fold { left: 50%; top: 30%; transform: translateX(-50%); }
+.sc-label--dim { left: 19.6%; top: 71.5%; padding: .3em .5em; background: #1D1D1B; }
+.sc-label--mark { left: 4.5%; top: 5%; }
+@media (max-width: 640px) { .sc-label--dim, .sc-label--mark { display: none; } }
+.scrub__photo { position: absolute; inset: 0; clip-path: inset(calc((1 - var(--s4)) * 100%) 0 0 0); perspective: 1600px; }
+/* Финальный приём, как в hero: фото на манекене уходит ребром и разворачивается фото на клиенте */
+.scrub__face { position: absolute; inset: 0; backface-visibility: hidden; }
+.scrub__face--front { transform: rotateY(var(--rf, 0deg)); }
+.scrub__face--back { transform: rotateY(var(--rb, 92deg)); }
+.scrub__face picture, .scrub__face img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (min-width: 900px) { .scrub__grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 6rem); } .scrub__frame { max-width: none; width: auto; height: min(78svh, 760px); } }
+
+/* Включается скриптом: высокая «дорожка» + липкая сцена. Без JS и при reduced-motion — обычный блок с финальным состоянием. */
+.is-scrub { height: 420vh; }
+.is-scrub .scrub__sticky { position: sticky; top: 0; height: 100svh; padding-block: calc(var(--header-h) + .5rem) 1.5rem; display: flex; align-items: center; overflow: hidden; }
+.is-scrub .scrub__grid { width: 100%; }
+@media (max-width: 899.98px) {
+  .is-scrub { height: 320vh; }
+  .scrub__grid { gap: 1.25rem; }
+  .is-scrub .scrub__frame { height: min(56svh, 520px); width: auto; max-width: 100%; }
+  .scrub__steps { gap: .4rem 1rem; }
+}
+
+/* ---- Анимация 5: строчка-навигатор сбоку ---- */
+.rail { position: fixed; left: 16px; top: 18vh; height: 64vh; width: 14px; z-index: 40; pointer-events: none; --p: 0; --rc: var(--graphite); transition: color .3s; color: var(--rc); }
+.rail.on-dark { --rc: var(--beige); }
+.rail__base { position: absolute; left: 6px; top: 0; bottom: 0; border-left: 1px dashed currentColor; opacity: .45; }
+.rail__fill { position: absolute; left: 5px; top: 0; height: calc(var(--p) * 100%); border-left: 3px dotted currentColor; }
+.rail__dot { position: absolute; left: 1px; width: 11px; height: 11px; margin-top: -5px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; pointer-events: auto; cursor: pointer; transition: background .3s var(--ease), transform .3s var(--ease); }
+.rail__dot:hover { transform: scale(1.5); }
+.rail__dot.is-passed { background: currentColor; }
+@media (max-width: 1199.98px) { .rail { display: none; } }

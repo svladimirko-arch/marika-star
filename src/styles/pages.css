@@ -1,0 +1,6 @@
+/* Общие правила страниц */
+.container--narrow { max-width: 860px; }
+main > .section:first-child { padding-top: calc(var(--header-h) + var(--section-y) * .5); }
+.legal__title { font-size: var(--fs-h2); margin-block: 1rem 2rem; }
+.legal p, .legal li { margin-bottom: 1rem; max-width: 46em; }
+.legal h2 { font-size: var(--fs-h3); margin-block: 2.5rem 1rem; }

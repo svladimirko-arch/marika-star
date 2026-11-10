@@ -1,0 +1,62 @@
+/* ===== Портфолио ===== */
+.works__head { display: grid; gap: 1rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+.works__head h2 em { color: var(--burgundy); }
+
+.works__filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+@media (max-width: 640px) { .works__filters { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; } .works__filters::-webkit-scrollbar { display: none; } .chip { flex: none; } }
+.works__filters[hidden] { display: none; }
+.chip { min-height: 44px; padding: .6em 1.3em; border: 1px solid var(--line); border-radius: 999px; background: transparent; font: 600 var(--fs-sm)/1 var(--font-sans); letter-spacing: .03em; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
+.chip:hover { border-color: var(--graphite); }
+.chip.is-active { background: var(--graphite); color: var(--ivory); border-color: var(--graphite); }
+
+/* Асимметричная «кладка»: колонки без пустот, плитки разной высоты, как разворот журнала */
+.works__grid { column-count: 2; column-gap: clamp(.75rem, 2vw, 1.75rem); }
+.work { position: relative; margin: 0 0 clamp(.75rem, 2vw, 1.75rem); break-inside: avoid; }
+.work[hidden] { display: none; }
+.work__btn { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: inherit; cursor: zoom-in; }
+.work__media { position: relative; display: block; overflow: hidden; background: var(--sand); }
+/* Плитки: пропорции повторяют реальные кадры (tall: 1098×1433, std: 1254×1254), чтобы фото
+   помещались целиком — без обрезки головы и ног. Параллакс-запаса нет: кадр показывается полностью. */
+.work--tall .work__media { aspect-ratio: 1098 / 1433; }
+.work--std .work__media { aspect-ratio: 1 / 1; }
+.work--wide .work__media { aspect-ratio: 4 / 3; }
+@media (min-width: 900px) { .works__grid { column-count: 3; } }
+.work__par { display: block; position: absolute; inset: 0; }
+.work__par picture, .work__par img { width: 100%; height: 100%; object-fit: cover; }
+.work__btn:hover .work__par img { transform: scale(1.035); }
+.work__par img { transition: transform .9s var(--ease-out); }
+.work__cap { display: grid; grid-template-columns: auto 1fr; gap: .15rem .8rem; margin-top: .8rem; font-size: var(--fs-sm); color: var(--text-2); }
+.work__n { font: 700 var(--fs-xs)/1.6 var(--font-sans); letter-spacing: .2em; color: var(--burgundy); grid-row: 1 / 3; }
+.work__cap strong { font: 600 var(--fs-sm)/1.4 var(--font-sans); color: var(--text); }
+
+.is-filtering .work { animation: work-in .6s var(--ease-out); }
+@keyframes work-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* Пустое состояние */
+.works-empty { display: grid; gap: 1.5rem; grid-template-columns: 1fr; align-items: center; justify-items: start; padding: clamp(2rem, 5vw, 4rem); border: 1px dashed var(--taupe); background: var(--bg-alt); color: var(--taupe); }
+.works-empty > div { display: grid; gap: 1rem; justify-items: start; color: var(--text); }
+.works-empty p { max-width: 38em; color: var(--text-2); }
+@media (min-width: 700px) { .works-empty { grid-template-columns: auto 1fr; gap: 3rem; } }
+
+/* Просмотр на весь экран */
+.lightbox { position: fixed; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(27, 27, 25, .96); color: var(--ivory); }
+.lightbox:not([open]) { display: none; }
+.lightbox[open] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto 1fr; animation: lb-in .35s var(--ease-out); }
+.lightbox::backdrop { background: rgba(27, 27, 25, .96); }
+@keyframes lb-in { from { opacity: 0; } }
+.lightbox__bar { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; padding: 1rem var(--gutter); }
+.lightbox__count { font: 600 var(--fs-xs)/1 var(--font-sans); letter-spacing: .22em; color: var(--beige); }
+.lightbox__x, .lightbox__nav { width: 48px; height: 48px; border: 1px solid rgba(216, 200, 178, .4); border-radius: 50%; background: transparent; color: var(--ivory); font-size: 1.15rem; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+.lightbox__x:hover, .lightbox__nav:hover { background: var(--ivory); color: var(--graphite); }
+.lightbox__nav { align-self: center; margin-inline: clamp(.5rem, 2vw, 2rem); }
+.lightbox__fig { display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; gap: .8rem; min-height: 0; padding-bottom: 1.25rem; }
+.lightbox__fig img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; min-height: 0; animation: lb-img .5s var(--ease-out); }
+@keyframes lb-img { from { opacity: 0; transform: scale(.985); } }
+.lightbox__fig figcaption { font-size: var(--fs-sm); color: #CFC8BB; text-align: center; max-width: 40em; min-height: 1.4em; }
+@media (max-width: 640px) {
+  .lightbox[open] { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+  .lightbox__nav { position: absolute; bottom: 1rem; margin: 0; }
+  .lightbox__nav--prev { left: var(--gutter); } .lightbox__nav--next { right: var(--gutter); }
+  .lightbox__fig { padding-bottom: 5rem; }
+}
+body.lb-open { overflow: hidden; }
